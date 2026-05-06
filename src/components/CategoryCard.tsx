@@ -1,5 +1,7 @@
 import { useRef } from 'react';
 import type { Category } from '../types';
+import PhotoEditButton from './PhotoEditButton';
+import { useCategories } from '../store/categories';
 
 interface Props {
   category: Category;
@@ -9,6 +11,7 @@ interface Props {
 }
 
 export default function CategoryCard({ category, count, onClick, onLongPress }: Props) {
+  const updatePhoto = useCategories((s) => s.updatePhoto);
   const pressTimer = useRef<number | undefined>(undefined);
   const longPressed = useRef(false);
 
@@ -35,16 +38,18 @@ export default function CategoryCard({ category, count, onClick, onLongPress }: 
   };
 
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       onClick={handleClick}
+      onKeyDown={(e) => (e.key === 'Enter' ? onClick() : undefined)}
       onTouchStart={startPress}
       onTouchEnd={cancelPress}
       onTouchMove={cancelPress}
       onMouseDown={startPress}
       onMouseUp={cancelPress}
       onMouseLeave={cancelPress}
-      className="group relative flex flex-col bg-white rounded-2xl shadow-card overflow-hidden text-start active:scale-[0.97] transition focus:outline-none focus:ring-2 focus:ring-delizio-red"
+      className="group relative flex flex-col bg-white rounded-2xl shadow-card overflow-hidden text-start cursor-pointer active:scale-[0.97] transition focus:outline-none focus:ring-2 focus:ring-delizio-red"
     >
       <div className="aspect-square bg-gradient-to-br from-delizio-red to-delizio-red-dark flex items-center justify-center relative">
         {category.photo_url ? (
@@ -58,10 +63,11 @@ export default function CategoryCard({ category, count, onClick, onLongPress }: 
           <span className="text-7xl drop-shadow-lg">{category.emoji}</span>
         )}
         {typeof count === 'number' && (
-          <span className="absolute top-2 end-2 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-full">
+          <span className="absolute top-2 start-2 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-full">
             {count}
           </span>
         )}
+        <PhotoEditButton onUpload={(file) => updatePhoto(category.id, file)} />
       </div>
       <div className="p-3 text-center">
         <div className="font-bold text-base leading-tight">{category.name_fr}</div>
@@ -71,6 +77,6 @@ export default function CategoryCard({ category, count, onClick, onLongPress }: 
           </div>
         )}
       </div>
-    </button>
+    </div>
   );
 }

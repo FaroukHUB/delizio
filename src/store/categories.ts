@@ -15,6 +15,7 @@ interface CategoriesState {
     photoFile?: File | null;
   }) => Promise<Category>;
   remove: (id: string) => Promise<void>;
+  updatePhoto: (id: string, file: File) => Promise<void>;
   byKey: (key: string) => Category | undefined;
 }
 
@@ -81,6 +82,30 @@ export const useCategories = create<CategoriesState>((set, get) => ({
     const { error } = await supabase.from('categories').delete().eq('id', id);
     if (error) throw error;
     set({ categories: get().categories.filter((c) => c.id !== id) });
+  },
+
+  updatePhoto: async (id, file) => {
+    const cat = get().categories.find((c) => c.id === id);
+    if (!cat) return;
+    const blob = await compressImage(file);
+    const path = `categories/${cat.key}-${Date.now()}.jpg`;
+    const { error: upErr } = await supabase.storage
+      .from(STORAGE_BUCKET)
+      .upload(path, blob, { contentType: 'image/jpeg', upsert: true });
+    if (upErr) throw upErr;
+    const { data: pub } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path);
+
+    const { error } = await supabase
+      .from('categories')
+      .update({ photo_url: pub.publicUrl })
+      .eq('id', id);
+    if (error) throw error;
+
+    set({
+      categories: get().categories.map((c) =>
+        c.id === id ? { ...c, photo_url: pub.publicUrl } : c
+      )
+    });
   },
 
   byKey: (key) => get().categories.find((c) => c.key === key)

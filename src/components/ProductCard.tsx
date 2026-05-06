@@ -1,5 +1,7 @@
 import { useRef } from 'react';
 import type { Product } from '../types';
+import PhotoEditButton from './PhotoEditButton';
+import { useProducts } from '../store/products';
 
 interface Props {
   product: Product;
@@ -8,6 +10,7 @@ interface Props {
 }
 
 export default function ProductCard({ product, onClick, onLongPress }: Props) {
+  const updatePhoto = useProducts((s) => s.updatePhoto);
   const pressTimer = useRef<number | undefined>(undefined);
   const longPressed = useRef(false);
 
@@ -34,18 +37,20 @@ export default function ProductCard({ product, onClick, onLongPress }: Props) {
   };
 
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       onClick={handleClick}
+      onKeyDown={(e) => (e.key === 'Enter' ? onClick() : undefined)}
       onTouchStart={startPress}
       onTouchEnd={cancelPress}
       onTouchMove={cancelPress}
       onMouseDown={startPress}
       onMouseUp={cancelPress}
       onMouseLeave={cancelPress}
-      className="group relative flex flex-col bg-white rounded-2xl shadow-card overflow-hidden text-start active:scale-[0.97] transition focus:outline-none focus:ring-2 focus:ring-delizio-red"
+      className="group relative flex flex-col bg-white rounded-2xl shadow-card overflow-hidden text-start cursor-pointer active:scale-[0.97] transition focus:outline-none focus:ring-2 focus:ring-delizio-red"
     >
-      <div className="aspect-square bg-gray-100 flex items-center justify-center">
+      <div className="aspect-square bg-gray-100 flex items-center justify-center relative">
         {product.photo_url ? (
           <img
             src={product.photo_url}
@@ -56,6 +61,7 @@ export default function ProductCard({ product, onClick, onLongPress }: Props) {
         ) : (
           <span className="text-5xl opacity-50">🍕</span>
         )}
+        <PhotoEditButton onUpload={(file) => updatePhoto(product.id, file)} />
       </div>
       <div className="p-3 text-center">
         <div className="font-bold text-base leading-tight line-clamp-2">{product.name}</div>
@@ -68,6 +74,6 @@ export default function ProductCard({ product, onClick, onLongPress }: Props) {
           <div className="text-xs text-gray-400 mt-1">{product.unit}</div>
         )}
       </div>
-    </button>
+    </div>
   );
 }

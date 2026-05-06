@@ -15,4 +15,4 @@ export const supabase = createClient(url ?? '', anon ?? '', {
   realtime: { params: { eventsPerSecond: 5 } }
 });
 
-export const STORAGE_BUCKET = 'delizio';
+export const STORAGE_BUCKET = 'Delizio';
