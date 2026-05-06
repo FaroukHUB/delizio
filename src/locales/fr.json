@@ -36,9 +36,14 @@
   "qty": {
     "title": "Quantité",
     "custom": "Autre",
+    "unit": "Unité",
     "note": "Remarque (facultatif)",
     "add": "Ajouter à la liste",
     "added": "Ajouté ✓"
+  },
+  "unit": {
+    "other": "Autre…",
+    "customPlaceholder": "ex: pot, douzaine, sac…"
   },
   "today": {
     "title": "Liste du jour",

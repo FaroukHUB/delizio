@@ -83,7 +83,10 @@ export default function TodayList() {
                 >
                   −
                 </button>
-                <div className="w-10 text-center font-bold text-lg">{it.qty}</div>
+                <div className="w-14 text-center font-bold text-base leading-tight">
+                  <div>{it.qty}</div>
+                  {it.unit && <div className="text-[10px] text-gray-400 font-normal">{it.unit}</div>}
+                </div>
                 <button
                   onClick={() => updateQty(it.id, it.qty + 1)}
                   className="w-10 h-10 rounded-full bg-delizio-red text-white text-xl font-bold active:scale-90"

@@ -23,7 +23,10 @@ export default function HistoryDetail() {
 
   const reuse = async () => {
     for (const it of entry.items) {
-      await addToToday(it.product_id, it.qty, it.note ?? undefined);
+      await addToToday(it.product_id, it.qty, {
+        unit: it.unit ?? undefined,
+        note: it.note ?? undefined
+      });
     }
     navigate('/today');
   };

@@ -27,12 +27,12 @@ export default function CategoryDetail() {
     [products, key]
   );
 
-  const handleConfirm = async (qty: number, note: string) => {
+  const handleConfirm = async (qty: number, unit: string, note: string) => {
     if (!selected) return;
     const name = selected.name;
     setSelected(null);
-    await addToToday(selected.id, qty, note);
-    setFlash(`✓ ${name} +${qty}`);
+    await addToToday(selected.id, qty, { unit, note });
+    setFlash(`✓ ${name} +${qty}${unit ? ' ' + unit : ''}`);
     setTimeout(() => setFlash(null), 1400);
   };
 

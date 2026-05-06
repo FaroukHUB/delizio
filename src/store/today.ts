@@ -12,8 +12,9 @@ interface TodayState {
   subscribe: () => void;
   unsubscribe: () => void;
 
-  add: (productId: string, qty: number, note?: string) => Promise<void>;
+  add: (productId: string, qty: number, opts?: { unit?: string; note?: string }) => Promise<void>;
   updateQty: (id: string, qty: number) => Promise<void>;
+  updateUnit: (id: string, unit: string) => Promise<void>;
   updateNote: (id: string, note: string) => Promise<void>;
   remove: (id: string) => Promise<void>;
   clear: () => Promise<void>;
@@ -63,9 +64,13 @@ export const useToday = create<TodayState>((set, get) => ({
     }
   },
 
-  add: async (productId, qty, note) => {
-    // si déjà présent, on incrémente plutôt que créer un doublon
-    const existing = get().items.find((it) => it.product_id === productId);
+  add: async (productId, qty, opts) => {
+    const note = opts?.note;
+    const unit = opts?.unit;
+    // si même produit + même unité déjà présent, on incrémente plutôt que doublon
+    const existing = get().items.find(
+      (it) => it.product_id === productId && (it.unit ?? null) === (unit ?? null)
+    );
     if (existing) {
       await get().updateQty(existing.id, existing.qty + qty);
       if (note) await get().updateNote(existing.id, note);
@@ -73,7 +78,7 @@ export const useToday = create<TodayState>((set, get) => ({
     }
     const { error } = await supabase
       .from('today_items')
-      .insert({ product_id: productId, qty, note: note || null });
+      .insert({ product_id: productId, qty, unit: unit || null, note: note || null });
     if (error) throw error;
     await get().fetch();
   },
@@ -83,6 +88,15 @@ export const useToday = create<TodayState>((set, get) => ({
     const { error } = await supabase.from('today_items').update({ qty }).eq('id', id);
     if (error) throw error;
     set({ items: get().items.map((it) => (it.id === id ? { ...it, qty } : it)) });
+  },
+
+  updateUnit: async (id, unit) => {
+    const { error } = await supabase
+      .from('today_items')
+      .update({ unit: unit || null })
+      .eq('id', id);
+    if (error) throw error;
+    set({ items: get().items.map((it) => (it.id === id ? { ...it, unit } : it)) });
   },
 
   updateNote: async (id, note) => {
@@ -117,6 +131,7 @@ export const useToday = create<TodayState>((set, get) => ({
       name: (it.product as Product | undefined)?.name ?? '',
       name_ar: (it.product as Product | undefined)?.name_ar ?? null,
       qty: it.qty,
+      unit: it.unit,
       note: it.note
     }));
 

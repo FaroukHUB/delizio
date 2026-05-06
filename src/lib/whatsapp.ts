@@ -60,8 +60,9 @@ export function buildWhatsAppMessage({ items, globalNote, lang, deliveryDay = 'n
     const fr = it.product?.name ?? '?';
     const ar = it.product?.name_ar;
     const name = ar ? `${fr} / ${ar}` : fr;
+    const unit = it.unit ? ` ${it.unit}` : '';
     const note = it.note ? ` (${it.note})` : '';
-    return `• ${name} x${it.qty}${note}`;
+    return `• ${name} ×${it.qty}${unit}${note}`;
   });
 
   const noteLine = globalNote

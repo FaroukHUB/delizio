@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Product } from '../types';
+import UnitPicker from './UnitPicker';
 
 interface Props {
   product: Product | null;
   onClose: () => void;
-  onConfirm: (qty: number, note: string) => void;
+  onConfirm: (qty: number, unit: string, note: string) => void;
 }
 
 const QUICK = [1, 2, 5];
@@ -13,6 +14,7 @@ const QUICK = [1, 2, 5];
 export default function QuantitySheet({ product, onClose, onConfirm }: Props) {
   const { t } = useTranslation();
   const [qty, setQty] = useState<number | ''>(1);
+  const [unit, setUnit] = useState('');
   const [note, setNote] = useState('');
   const [custom, setCustom] = useState(false);
 
@@ -21,6 +23,7 @@ export default function QuantitySheet({ product, onClose, onConfirm }: Props) {
       setQty(1);
       setNote('');
       setCustom(false);
+      setUnit(product.unit?.trim() || 'pièce');
     }
   }, [product]);
 
@@ -29,7 +32,7 @@ export default function QuantitySheet({ product, onClose, onConfirm }: Props) {
   const submit = () => {
     const final = typeof qty === 'number' ? qty : parseFloat(String(qty));
     if (!final || final <= 0) return;
-    onConfirm(final, note.trim());
+    onConfirm(final, unit.trim(), note.trim());
   };
 
   return (
@@ -37,7 +40,7 @@ export default function QuantitySheet({ product, onClose, onConfirm }: Props) {
       <div className="absolute inset-0 bg-black/50" />
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-3xl bg-white rounded-t-3xl p-6 pb-8 shadow-2xl animate-[slideUp_.2s_ease-out]"
+        className="relative w-full max-w-3xl bg-white rounded-t-3xl p-6 pb-8 shadow-2xl animate-[slideUp_.2s_ease-out] max-h-[90vh] overflow-y-auto"
         style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 1.5rem)' }}
       >
         <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4" />
@@ -93,6 +96,11 @@ export default function QuantitySheet({ product, onClose, onConfirm }: Props) {
             placeholder="ex: 3.5"
           />
         )}
+
+        <div className="mb-4">
+          <div className="text-xs text-gray-500 uppercase mb-2">{t('qty.unit')}</div>
+          <UnitPicker value={unit} onChange={setUnit} />
+        </div>
 
         <input
           type="text"

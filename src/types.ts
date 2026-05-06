@@ -23,6 +23,7 @@ export interface TodayItem {
   id: string;
   product_id: string;
   qty: number;
+  unit: string | null;
   note: string | null;
   created_at: string;
   product?: Product;
@@ -31,7 +32,7 @@ export interface TodayItem {
 export interface HistoryEntry {
   id: string;
   sent_at: string;
-  items: { product_id: string; name: string; name_ar: string | null; qty: number; note: string | null }[];
+  items: { product_id: string; name: string; name_ar: string | null; qty: number; unit: string | null; note: string | null }[];
   global_note: string | null;
   contact_label: string | null;
   contact_phone: string | null;

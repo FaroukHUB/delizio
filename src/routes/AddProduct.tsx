@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PhotoPicker from '../components/PhotoPicker';
+import UnitPicker from '../components/UnitPicker';
 import { useProducts } from '../store/products';
 import { useCategories } from '../store/categories';
 
@@ -90,15 +91,12 @@ export default function AddProduct() {
         </div>
       </div>
 
-      <label className="block">
+      <div>
         <span className="text-sm font-medium text-gray-700">{t('addProduct.unit')}</span>
-        <input
-          value={unit}
-          onChange={(e) => setUnit(e.target.value)}
-          className="input mt-1"
-          placeholder="kg, L, pièce…"
-        />
-      </label>
+        <div className="mt-1">
+          <UnitPicker value={unit} onChange={setUnit} />
+        </div>
+      </div>
 
       {error && <div className="text-sm text-delizio-red bg-red-50 rounded-lg p-3">{error}</div>}
 
