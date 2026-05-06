@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { supabase, STORAGE_BUCKET } from '../lib/supabase';
 import { compressImage, slugify } from '../lib/image';
-import type { Product, CategoryKey } from '../types';
+import type { Product } from '../types';
 
 interface ProductsState {
   products: Product[];
@@ -11,7 +11,7 @@ interface ProductsState {
   add: (data: {
     name: string;
     name_ar?: string;
-    category: CategoryKey;
+    category: string;
     unit?: string;
     photoFile?: File | null;
   }) => Promise<Product>;

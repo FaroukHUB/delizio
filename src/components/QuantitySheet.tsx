@@ -11,7 +11,7 @@ interface Props {
 const QUICK = [1, 2, 5];
 
 export default function QuantitySheet({ product, onClose, onConfirm }: Props) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [qty, setQty] = useState<number | ''>(1);
   const [note, setNote] = useState('');
   const [custom, setCustom] = useState(false);
@@ -25,7 +25,6 @@ export default function QuantitySheet({ product, onClose, onConfirm }: Props) {
   }, [product]);
 
   if (!product) return null;
-  const name = i18n.language === 'ar' && product.name_ar ? product.name_ar : product.name;
 
   const submit = () => {
     const final = typeof qty === 'number' ? qty : parseFloat(String(qty));
@@ -45,13 +44,16 @@ export default function QuantitySheet({ product, onClose, onConfirm }: Props) {
 
         <div className="flex items-center gap-3 mb-5">
           {product.photo_url ? (
-            <img src={product.photo_url} alt={name} className="w-14 h-14 rounded-xl object-cover" />
+            <img src={product.photo_url} alt={product.name} className="w-14 h-14 rounded-xl object-cover" />
           ) : (
             <div className="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center text-2xl">🍕</div>
           )}
           <div className="flex-1">
             <div className="text-xs text-gray-500 uppercase">{t('qty.title')}</div>
-            <div className="text-xl font-bold leading-tight">{name}</div>
+            <div className="text-xl font-bold leading-tight">{product.name}</div>
+            {product.name_ar && (
+              <div className="text-sm text-gray-500 font-arabic" dir="rtl">{product.name_ar}</div>
+            )}
           </div>
         </div>
 

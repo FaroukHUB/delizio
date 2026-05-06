@@ -1,13 +1,14 @@
 import { useRef } from 'react';
-import type { Product } from '../types';
+import type { Category } from '../types';
 
 interface Props {
-  product: Product;
+  category: Category;
+  count?: number;
   onClick: () => void;
   onLongPress?: () => void;
 }
 
-export default function ProductCard({ product, onClick, onLongPress }: Props) {
+export default function CategoryCard({ category, count, onClick, onLongPress }: Props) {
   const pressTimer = useRef<number | undefined>(undefined);
   const longPressed = useRef(false);
 
@@ -45,27 +46,29 @@ export default function ProductCard({ product, onClick, onLongPress }: Props) {
       onMouseLeave={cancelPress}
       className="group relative flex flex-col bg-white rounded-2xl shadow-card overflow-hidden text-start active:scale-[0.97] transition focus:outline-none focus:ring-2 focus:ring-delizio-red"
     >
-      <div className="aspect-square bg-gray-100 flex items-center justify-center">
-        {product.photo_url ? (
+      <div className="aspect-square bg-gradient-to-br from-delizio-red to-delizio-red-dark flex items-center justify-center relative">
+        {category.photo_url ? (
           <img
-            src={product.photo_url}
-            alt={product.name}
+            src={category.photo_url}
+            alt={category.name_fr}
             className="w-full h-full object-cover"
             loading="lazy"
           />
         ) : (
-          <span className="text-5xl opacity-50">🍕</span>
+          <span className="text-7xl drop-shadow-lg">{category.emoji}</span>
+        )}
+        {typeof count === 'number' && (
+          <span className="absolute top-2 end-2 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-full">
+            {count}
+          </span>
         )}
       </div>
       <div className="p-3 text-center">
-        <div className="font-bold text-base leading-tight line-clamp-2">{product.name}</div>
-        {product.name_ar && (
-          <div className="text-sm text-gray-500 mt-0.5 font-arabic line-clamp-1" dir="rtl">
-            {product.name_ar}
+        <div className="font-bold text-base leading-tight">{category.name_fr}</div>
+        {category.name_ar && (
+          <div className="text-sm text-gray-500 mt-0.5 font-arabic" dir="rtl">
+            {category.name_ar}
           </div>
-        )}
-        {product.unit && (
-          <div className="text-xs text-gray-400 mt-1">{product.unit}</div>
         )}
       </div>
     </button>

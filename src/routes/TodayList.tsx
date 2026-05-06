@@ -56,10 +56,7 @@ export default function TodayList() {
       </div>
 
       <ul className="space-y-2 mb-4">
-        {items.map((it) => {
-          const name =
-            i18n.language === 'ar' && it.product?.name_ar ? it.product.name_ar : it.product?.name ?? '';
-          return (
+        {items.map((it) => (
             <li
               key={it.id}
               className="bg-white rounded-2xl shadow-card p-3 flex items-center gap-3"
@@ -72,7 +69,10 @@ export default function TodayList() {
                 </div>
               )}
               <div className="flex-1 min-w-0">
-                <div className="font-semibold leading-tight truncate">{name}</div>
+                <div className="font-semibold leading-tight truncate">{it.product?.name ?? ''}</div>
+                {it.product?.name_ar && (
+                  <div className="text-xs text-gray-500 font-arabic truncate" dir="rtl">{it.product.name_ar}</div>
+                )}
                 {it.note && <div className="text-xs text-gray-500 truncate">{it.note}</div>}
               </div>
               <div className="flex items-center gap-1">
@@ -98,8 +98,7 @@ export default function TodayList() {
                 ✕
               </button>
             </li>
-          );
-        })}
+          ))}
       </ul>
 
       <textarea

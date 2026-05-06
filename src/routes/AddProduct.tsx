@@ -1,26 +1,32 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PhotoPicker from '../components/PhotoPicker';
 import { useProducts } from '../store/products';
-import { CATEGORIES, type CategoryKey } from '../types';
+import { useCategories } from '../store/categories';
 
 export default function AddProduct() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const params = useParams<{ key?: string }>();
   const add = useProducts((s) => s.add);
+  const categories = useCategories((s) => s.categories);
 
   const [name, setName] = useState('');
   const [nameAr, setNameAr] = useState('');
-  const [category, setCategory] = useState<CategoryKey>('fromages');
+  const [category, setCategory] = useState<string>(params.key ?? '');
   const [unit, setUnit] = useState('');
   const [photo, setPhoto] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!category && categories.length > 0) setCategory(categories[0].key);
+  }, [categories, category]);
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim()) return;
+    if (!name.trim() || !category) return;
     setSaving(true);
     setError(null);
     try {
@@ -31,7 +37,7 @@ export default function AddProduct() {
         unit: unit.trim() || undefined,
         photoFile: photo
       });
-      navigate('/catalog');
+      navigate(`/catalog/${category}`);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : t('common.error'));
     } finally {
@@ -68,17 +74,17 @@ export default function AddProduct() {
       </label>
 
       <div>
-        <span className="text-sm font-medium text-gray-700">{t('addProduct.category')}</span>
+        <span className="text-sm font-medium text-gray-700">{t('addProduct.category')} *</span>
         <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mt-1">
-          {CATEGORIES.map((c) => (
+          {categories.map((c) => (
             <button
               type="button"
-              key={c.key}
+              key={c.id}
               onClick={() => setCategory(c.key)}
               className={`chip flex-col gap-0 py-3 ${category === c.key ? 'chip-active' : ''}`}
             >
               <span className="text-xl">{c.emoji}</span>
-              <span className="text-xs">{t(`categories.${c.key}`)}</span>
+              <span className="text-xs">{c.name_fr}</span>
             </button>
           ))}
         </div>
@@ -104,7 +110,7 @@ export default function AddProduct() {
         >
           {t('common.cancel')}
         </button>
-        <button type="submit" disabled={saving || !name.trim()} className="btn btn-primary btn-lg flex-1">
+        <button type="submit" disabled={saving || !name.trim() || !category} className="btn btn-primary btn-lg flex-1">
           {saving ? '…' : t('addProduct.save')}
         </button>
       </div>

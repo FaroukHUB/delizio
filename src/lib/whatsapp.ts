@@ -20,7 +20,9 @@ export function buildWhatsAppMessage({ items, globalNote, lang }: BuildArgs): st
       : `📋 Liste réapprovisionnement du ${today}`;
 
   const lines = items.map((it) => {
-    const name = lang === 'ar' && it.product?.name_ar ? it.product.name_ar : it.product?.name ?? '?';
+    const fr = it.product?.name ?? '?';
+    const ar = it.product?.name_ar;
+    const name = ar ? `${fr} / ${ar}` : fr;
     const note = it.note ? ` (${it.note})` : '';
     return `• ${name} x${it.qty}${note}`;
   });

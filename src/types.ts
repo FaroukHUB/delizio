@@ -1,27 +1,19 @@
-export type CategoryKey =
-  | 'fromages'
-  | 'viandes'
-  | 'legumes'
-  | 'sauces'
-  | 'condiments'
-  | 'desserts'
-  | 'emballages';
-
-export const CATEGORIES: { key: CategoryKey; emoji: string }[] = [
-  { key: 'fromages', emoji: '🧀' },
-  { key: 'viandes', emoji: '🍖' },
-  { key: 'legumes', emoji: '🥬' },
-  { key: 'sauces', emoji: '🥫' },
-  { key: 'condiments', emoji: '🧂' },
-  { key: 'desserts', emoji: '🍰' },
-  { key: 'emballages', emoji: '📦' }
-];
+export interface Category {
+  id: string;
+  key: string;
+  name_fr: string;
+  name_ar: string | null;
+  emoji: string;
+  photo_url: string | null;
+  position: number;
+  created_at: string;
+}
 
 export interface Product {
   id: string;
   name: string;
   name_ar: string | null;
-  category: CategoryKey;
+  category: string; // category.key
   photo_url: string | null;
   unit: string | null;
   created_at: string;

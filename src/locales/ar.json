@@ -20,9 +20,18 @@
   },
   "catalog": {
     "search": "ابحث عن منتج…",
-    "all": "الكل",
     "empty": "لا توجد منتجات في هذه الفئة",
-    "addProduct": "إضافة منتج"
+    "addProduct": "إضافة منتج",
+    "addCategory": "إضافة فئة",
+    "confirmDeleteCategory": "هل تريد حذف هذه الفئة؟",
+    "cantDeleteCategoryWithProducts": "غير ممكن: هذه الفئة تحتوي على منتجات. احذفها أولاً."
+  },
+  "addCategory": {
+    "title": "فئة جديدة",
+    "name": "الاسم (بالفرنسية)",
+    "nameAr": "الاسم بالعربية (اختياري)",
+    "emoji": "أيقونة",
+    "save": "إنشاء الفئة"
   },
   "qty": {
     "title": "الكمية",

@@ -20,9 +20,18 @@
   },
   "catalog": {
     "search": "Rechercher un produit…",
-    "all": "Tout",
     "empty": "Aucun produit dans cette catégorie",
-    "addProduct": "Ajouter un produit"
+    "addProduct": "Ajouter un produit",
+    "addCategory": "Ajouter une catégorie",
+    "confirmDeleteCategory": "Supprimer cette catégorie ?",
+    "cantDeleteCategoryWithProducts": "Impossible : cette catégorie contient des produits. Supprime-les d'abord."
+  },
+  "addCategory": {
+    "title": "Nouvelle catégorie",
+    "name": "Nom (français)",
+    "nameAr": "Nom en arabe (facultatif)",
+    "emoji": "Icône",
+    "save": "Créer la catégorie"
   },
   "qty": {
     "title": "Quantité",
