@@ -70,7 +70,11 @@ execute function ensure_single_default_contact();
 
 -- 3. Realtime -------------------------------------------------------------
 
-alter publication supabase_realtime add table today_items;
+do $$
+begin
+  alter publication supabase_realtime add table today_items;
+exception when duplicate_object then null;
+end $$;
 
 -- 4. RLS (V1 : outil interne, accès anon autorisé) -------------------------
 -- ⚠️ V2 : ajouter une auth (Supabase Auth ou simple PIN code) avant prod publique.
