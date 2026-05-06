@@ -50,7 +50,7 @@ export default function ProductCard({ product, onClick, onLongPress }: Props) {
       onMouseLeave={cancelPress}
       className="group relative flex flex-col bg-white rounded-2xl shadow-card overflow-hidden text-start cursor-pointer active:scale-[0.97] transition focus:outline-none focus:ring-2 focus:ring-delizio-red"
     >
-      <div className="aspect-square bg-gray-100 flex items-center justify-center relative">
+      <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative">
         {product.photo_url ? (
           <img
             src={product.photo_url}
@@ -59,11 +59,11 @@ export default function ProductCard({ product, onClick, onLongPress }: Props) {
             loading="lazy"
           />
         ) : (
-          <span className="text-5xl opacity-50">🍕</span>
+          <span className="text-7xl opacity-30">🍕</span>
         )}
         <PhotoEditButton onUpload={(file) => updatePhoto(product.id, file)} />
       </div>
-      <div className="p-3 text-center">
+      <div className="p-3 text-center min-h-[96px] flex flex-col justify-center">
         <div className="font-bold text-base leading-tight line-clamp-2">{product.name}</div>
         {product.name_ar && (
           <div className="text-sm text-gray-500 mt-0.5 font-arabic line-clamp-1" dir="rtl">

@@ -80,7 +80,7 @@ export default function Catalog() {
               <p>{t('catalog.empty')}</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {matched.map((p) => (
                 <ProductCard key={p.id} product={p} onClick={() => setSelected(p)} />
               ))}
@@ -88,7 +88,7 @@ export default function Catalog() {
           )}
         </>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {categories.map((c) => (
             <CategoryCard
               key={c.id}

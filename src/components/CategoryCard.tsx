@@ -69,7 +69,7 @@ export default function CategoryCard({ category, count, onClick, onLongPress }: 
         )}
         <PhotoEditButton onUpload={(file) => updatePhoto(category.id, file)} />
       </div>
-      <div className="p-3 text-center">
+      <div className="p-3 text-center min-h-[80px] flex flex-col justify-center">
         <div className="font-bold text-base leading-tight">{category.name_fr}</div>
         {category.name_ar && (
           <div className="text-sm text-gray-500 mt-0.5 font-arabic" dir="rtl">

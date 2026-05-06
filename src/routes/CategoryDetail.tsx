@@ -72,7 +72,7 @@ export default function CategoryDetail() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
         {list.map((p) => (
           <ProductCard
             key={p.id}
