@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+  background: #fafafa;
+  color: #0A0A0A;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: contain;
+}
+
+body {
+  font-family: theme('fontFamily.sans');
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+html[dir="rtl"] body {
+  font-family: theme('fontFamily.arabic');
+}
+
+button { -webkit-user-select: none; user-select: none; }
+
+input, textarea, select { font-size: 16px; }
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-2xl font-semibold transition active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-lg { @apply px-6 py-4 text-lg min-h-[56px]; }
+  .btn-md { @apply px-5 py-3 text-base min-h-[48px]; }
+  .btn-primary { @apply bg-delizio-red text-white shadow-card hover:bg-delizio-red-dark; }
+  .btn-dark    { @apply bg-delizio-black text-white hover:bg-delizio-gray; }
+  .btn-ghost   { @apply bg-white text-delizio-black border border-gray-200 hover:bg-gray-50; }
+  .btn-danger  { @apply bg-white text-delizio-red border border-delizio-red hover:bg-delizio-red hover:text-white; }
+
+  .input {
+    @apply w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-base outline-none focus:border-delizio-red;
+  }
+
+  .chip {
+    @apply inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium bg-white border border-gray-200;
+  }
+  .chip-active { @apply bg-delizio-red text-white border-delizio-red; }
+}

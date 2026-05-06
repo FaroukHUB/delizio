@@ -1,0 +1,92 @@
+{
+  "app": {
+    "title": "Delizio",
+    "subtitle": "Réappro Cuisine"
+  },
+  "nav": {
+    "catalog": "Produits",
+    "today": "Liste",
+    "history": "Historique",
+    "settings": "Réglages"
+  },
+  "categories": {
+    "fromages": "Fromages",
+    "viandes": "Viandes",
+    "legumes": "Légumes",
+    "sauces": "Sauces",
+    "condiments": "Condiments",
+    "desserts": "Desserts",
+    "emballages": "Emballages"
+  },
+  "catalog": {
+    "search": "Rechercher un produit…",
+    "all": "Tout",
+    "empty": "Aucun produit dans cette catégorie",
+    "addProduct": "Ajouter un produit"
+  },
+  "qty": {
+    "title": "Quantité",
+    "custom": "Autre",
+    "note": "Remarque (facultatif)",
+    "add": "Ajouter à la liste",
+    "added": "Ajouté ✓"
+  },
+  "today": {
+    "title": "Liste du jour",
+    "empty": "Aucun produit sélectionné",
+    "emptyHint": "Tape sur les cartes du catalogue pour ajouter des produits.",
+    "globalNote": "Remarque générale (urgent, demain matin…)",
+    "send": "Envoyer sur WhatsApp",
+    "clear": "Vider la liste",
+    "confirmClear": "Vider toute la liste ?",
+    "remove": "Retirer",
+    "chooseContact": "Envoyer à :",
+    "items_one": "{{count}} produit",
+    "items_other": "{{count}} produits"
+  },
+  "history": {
+    "title": "Historique",
+    "empty": "Aucun envoi pour le moment",
+    "sentTo": "Envoyé à",
+    "reuse": "Réutiliser cette liste",
+    "back": "Retour"
+  },
+  "addProduct": {
+    "title": "Nouveau produit",
+    "name": "Nom du produit",
+    "nameAr": "Nom en arabe (facultatif)",
+    "category": "Catégorie",
+    "unit": "Unité (kg, L, pièce…)",
+    "photo": "Photo",
+    "takePhoto": "Prendre une photo",
+    "choosePhoto": "Choisir une photo",
+    "save": "Enregistrer",
+    "delete": "Supprimer ce produit",
+    "confirmDelete": "Supprimer ce produit ?"
+  },
+  "settings": {
+    "title": "Réglages",
+    "logo": "Logo de la pizzeria",
+    "logoUpload": "Changer le logo",
+    "language": "Langue",
+    "contacts": "Contacts WhatsApp",
+    "addContact": "Ajouter un numéro",
+    "contactLabel": "Nom (ex: Fournisseur principal)",
+    "contactPhone": "Numéro avec indicatif (+33…)",
+    "default": "Par défaut",
+    "setDefault": "Définir par défaut",
+    "save": "Enregistrer",
+    "cancel": "Annuler"
+  },
+  "common": {
+    "loading": "Chargement…",
+    "error": "Une erreur est survenue",
+    "retry": "Réessayer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "yes": "Oui",
+    "no": "Non"
+  }
+}
