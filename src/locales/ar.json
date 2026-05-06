@@ -50,6 +50,18 @@
     "confirmClear": "هل تريد إفراغ القائمة بأكملها؟",
     "remove": "إزالة",
     "chooseContact": "إرسال إلى:",
+    "deliveryFor": "متى؟",
+    "day": {
+      "now": "حالاً",
+      "tomorrow": "غداً",
+      "monday": "الإثنين",
+      "tuesday": "الثلاثاء",
+      "wednesday": "الأربعاء",
+      "thursday": "الخميس",
+      "friday": "الجمعة",
+      "saturday": "السبت",
+      "sunday": "الأحد"
+    },
     "items_one": "{{count}} منتج",
     "items_other": "{{count}} منتجات"
   },

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useToday } from '../store/today';
 import { useContacts } from '../store/contacts';
 import { useHistory } from '../store/history';
-import { buildWhatsAppMessage, buildWhatsAppLink } from '../lib/whatsapp';
+import { buildWhatsAppMessage, buildWhatsAppLink, DELIVERY_DAYS, type DeliveryDay } from '../lib/whatsapp';
 import type { Contact } from '../types';
 
 export default function TodayList() {
@@ -21,6 +21,7 @@ export default function TodayList() {
   const refreshHistory = useHistory((s) => s.fetch);
 
   const [contactId, setContactId] = useState<string | null>(null);
+  const [deliveryDay, setDeliveryDay] = useState<DeliveryDay>('now');
 
   const selectedContact: Contact | undefined = useMemo(() => {
     if (contactId) return contacts.find((c) => c.id === contactId);
@@ -29,7 +30,7 @@ export default function TodayList() {
 
   const handleSend = async () => {
     if (items.length === 0 || !selectedContact) return;
-    const msg = buildWhatsAppMessage({ items, globalNote, lang: i18n.language as 'fr' | 'ar' });
+    const msg = buildWhatsAppMessage({ items, globalNote, lang: i18n.language as 'fr' | 'ar', deliveryDay });
     const link = buildWhatsAppLink(selectedContact, msg);
     window.open(link, '_blank');
     await archiveAndClear({ label: selectedContact.label, phone: selectedContact.phone });
@@ -108,6 +109,22 @@ export default function TodayList() {
         rows={2}
         className="input mb-3 resize-none"
       />
+
+      <div className="mb-3">
+        <div className="text-sm font-medium text-gray-600 mb-2 px-1">{t('today.deliveryFor')}</div>
+        <div className="flex gap-2 overflow-x-auto pb-1 -mx-3 px-3">
+          {DELIVERY_DAYS.map((d) => (
+            <button
+              key={d}
+              type="button"
+              onClick={() => setDeliveryDay(d)}
+              className={`chip whitespace-nowrap ${deliveryDay === d ? 'chip-active' : ''}`}
+            >
+              {t(`today.day.${d}`)}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {contacts.length > 1 && (
         <div className="mb-3">

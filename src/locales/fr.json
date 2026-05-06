@@ -50,6 +50,18 @@
     "confirmClear": "Vider toute la liste ?",
     "remove": "Retirer",
     "chooseContact": "Envoyer à :",
+    "deliveryFor": "Pour quand ?",
+    "day": {
+      "now": "Tout de suite",
+      "tomorrow": "Demain",
+      "monday": "Lundi",
+      "tuesday": "Mardi",
+      "wednesday": "Mercredi",
+      "thursday": "Jeudi",
+      "friday": "Vendredi",
+      "saturday": "Samedi",
+      "sunday": "Dimanche"
+    },
     "items_one": "{{count}} produit",
     "items_other": "{{count}} produits"
   },
