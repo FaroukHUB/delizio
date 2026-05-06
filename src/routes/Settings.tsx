@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useContacts } from '../store/contacts';
 import { useSettings } from '../store/settings';
+import { useAuth } from '../store/auth';
 import { setLanguage } from '../lib/i18n';
 
 export default function Settings() {
@@ -15,6 +16,8 @@ export default function Settings() {
   const logoUrl = useSettings((s) => s.logo_url);
   const uploadLogo = useSettings((s) => s.uploadLogo);
   const removeLogo = useSettings((s) => s.removeLogo);
+
+  const logout = useAuth((s) => s.logout);
 
   const logoInput = useRef<HTMLInputElement>(null);
 
@@ -165,6 +168,18 @@ export default function Settings() {
             ＋ {t('settings.addContact')}
           </button>
         </form>
+      </section>
+
+      <section className="pt-2">
+        <button
+          type="button"
+          onClick={() => {
+            if (confirm(t('settings.confirmLogout'))) logout();
+          }}
+          className="btn btn-danger btn-lg w-full"
+        >
+          🚪 {t('settings.logout')}
+        </button>
       </section>
     </div>
   );

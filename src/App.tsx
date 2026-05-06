@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import BottomNav from './components/BottomNav';
+import Login from './routes/Login';
 import Catalog from './routes/Catalog';
 import CategoryDetail from './routes/CategoryDetail';
 import TodayList from './routes/TodayList';
@@ -15,8 +16,11 @@ import { useCategories } from './store/categories';
 import { useToday } from './store/today';
 import { useContacts } from './store/contacts';
 import { useSettings } from './store/settings';
+import { useAuth } from './store/auth';
 
 export default function App() {
+  const isAuthed = useAuth((s) => s.isAuthed);
+
   const fetchProducts = useProducts((s) => s.fetch);
   const fetchCategories = useCategories((s) => s.fetch);
   const fetchToday = useToday((s) => s.fetch);
@@ -26,6 +30,7 @@ export default function App() {
   const fetchSettings = useSettings((s) => s.fetch);
 
   useEffect(() => {
+    if (!isAuthed) return;
     fetchCategories();
     fetchProducts();
     fetchToday();
@@ -33,7 +38,9 @@ export default function App() {
     fetchSettings();
     subscribe();
     return () => unsubscribe();
-  }, [fetchCategories, fetchProducts, fetchToday, fetchContacts, fetchSettings, subscribe, unsubscribe]);
+  }, [isAuthed, fetchCategories, fetchProducts, fetchToday, fetchContacts, fetchSettings, subscribe, unsubscribe]);
+
+  if (!isAuthed) return <Login />;
 
   return (
     <div className="min-h-full flex flex-col">

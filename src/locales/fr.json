@@ -85,8 +85,16 @@
     "delete": "Supprimer ce produit",
     "confirmDelete": "Supprimer ce produit ?"
   },
+  "login": {
+    "username": "Identifiant",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "error": "Identifiant ou mot de passe incorrect"
+  },
   "settings": {
     "title": "Réglages",
+    "logout": "Se déconnecter",
+    "confirmLogout": "Se déconnecter ?",
     "logo": "Logo de la pizzeria",
     "logoUpload": "Changer le logo",
     "language": "Langue",
