@@ -43,9 +43,13 @@ export default function Catalog() {
     if (!selected) return;
     const name = selected.name;
     setSelected(null);
-    await addToToday(selected.id, qty, { unit, note });
-    setFlash(`✓ ${name} +${qty}${unit ? ' ' + unit : ''}`);
-    setTimeout(() => setFlash(null), 1400);
+    try {
+      await addToToday(selected.id, qty, { unit, note });
+      setFlash(`✓ ${name} +${qty}${unit ? ' ' + unit : ''}`);
+    } catch (err) {
+      setFlash(`⚠️ ${err instanceof Error ? err.message : 'Erreur ajout'}`);
+    }
+    setTimeout(() => setFlash(null), 2200);
   };
 
   const handleLongPressCategory = async (catId: string, count: number) => {
